@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_id": "facultyrater",
+    "project_number": "747388037301",
+    "name": "FacultyRater"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747388037301:android:0648858bdcb836d0",
+        "client_id": "android:com.silentdevelopers.facultyrater",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.silentdevelopers.facultyrater"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747388037301-tbdgv7pjtvjs2adak9ht2t4qt6tf6bjh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.silentdevelopers.facultyrater",
+            "certificate_hash": "E76EEE4C5801A17140BB32816FB77187067D95E3"
+          }
+        },
+        {
+          "client_id": "747388037301-8r3d92n45v5c9vn650l453e7cp1p6s12.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
