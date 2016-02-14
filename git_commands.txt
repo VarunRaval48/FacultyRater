@@ -1,0 +1,283 @@
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>cd C:\Users\jaina_000\Andr
+oidStudioProjects\FacultyRater
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git remote master https://
+github.com/JainamJhaveri/FacultyRater.git
+error: Unknown subcommand: master
+usage: git remote [-v | --verbose]
+   or: git remote add [-t <branch>] [-m <master>] [-f] [--tags | --no-tags] [--m
+irror=<fetch|push>] <name> <url>
+   or: git remote rename <old> <new>
+   or: git remote remove <name>
+   or: git remote set-head <name> (-a | --auto | -d | --delete | <branch>)
+   or: git remote [-v | --verbose] show [-n] <name>
+   or: git remote prune [-n | --dry-run] <name>
+   or: git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)..
+.]
+   or: git remote set-branches [--add] <name> <branch>...
+   or: git remote set-url [--push] <name> <newurl> [<oldurl>]
+   or: git remote set-url --add <name> <newurl>
+   or: git remote set-url --delete <name> <url>
+
+    -v, --verbose         be verbose; must be placed before a subcommand
+
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git remote https://github.
+com/JainamJhaveri/FacultyRater.git
+error: Unknown subcommand: https://github.com/JainamJhaveri/FacultyRater.git
+usage: git remote [-v | --verbose]
+   or: git remote add [-t <branch>] [-m <master>] [-f] [--tags | --no-tags] [--m
+irror=<fetch|push>] <name> <url>
+   or: git remote rename <old> <new>
+   or: git remote remove <name>
+   or: git remote set-head <name> (-a | --auto | -d | --delete | <branch>)
+   or: git remote [-v | --verbose] show [-n] <name>
+   or: git remote prune [-n | --dry-run] <name>
+   or: git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)..
+.]
+   or: git remote set-branches [--add] <name> <branch>...
+   or: git remote set-url [--push] <name> <newurl> [<oldurl>]
+   or: git remote set-url --add <name> <newurl>
+   or: git remote set-url --delete <name> <url>
+
+    -v, --verbose         be verbose; must be placed before a subcommand
+
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git remote add master http
+s://github.com/JainamJhaveri/FacultyRater.git
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git pull
+fatal: No remote repository specified.  Please, specify either a URL or a
+remote name from which new revisions should be fetched.
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git pull master
+remote: Counting objects: 3, done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/JainamJhaveri/FacultyRater
+ * [new branch]      master     -> master/master
+You asked to pull from the remote 'master', but did not specify
+a branch. Because this is not the default configured remote
+for your current branch, you must specify a branch on the command line.
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git pull master master
+From https://github.com/JainamJhaveri/FacultyRater
+ * branch            master     -> FETCH_HEAD
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git add .
+warning: LF will be replaced by CRLF in .idea/compiler.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/encodings.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/gradle.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/misc.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/modules.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/runConfigurations.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/vcs.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in gradle/wrapper/gradle-wrapper.properties
+.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in gradlew.
+The file will have its original line endings in your working directory.
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   .gitignore
+        new file:   .idea/.name
+        new file:   .idea/compiler.xml
+        new file:   .idea/copyright/profiles_settings.xml
+        new file:   .idea/encodings.xml
+        new file:   .idea/gradle.xml
+        new file:   .idea/misc.xml
+        new file:   .idea/modules.xml
+        new file:   .idea/runConfigurations.xml
+        new file:   .idea/vcs.xml
+        new file:   app/.gitignore
+        new file:   app/build.gradle
+        new file:   app/proguard-rules.pro
+        new file:   app/src/androidTest/java/com/silentdevelopers/facultyrater/A
+pplicationTest.java
+        new file:   app/src/main/AndroidManifest.xml
+        new file:   app/src/main/java/com/silentdevelopers/facultyrater/HomeActi
+vity.java
+        new file:   app/src/main/java/com/silentdevelopers/facultyrater/StartAct
+ivity.java
+        new file:   app/src/main/res/layout/activity_home.xml
+        new file:   app/src/main/res/layout/activity_start.xml
+        new file:   app/src/main/res/mipmap-hdpi/ic_launcher.png
+        new file:   app/src/main/res/mipmap-mdpi/ic_launcher.png
+        new file:   app/src/main/res/mipmap-xhdpi/ic_launcher.png
+        new file:   app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+        new file:   app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+        new file:   app/src/main/res/values-w820dp/dimens.xml
+        new file:   app/src/main/res/values/colors.xml
+        new file:   app/src/main/res/values/dimens.xml
+        new file:   app/src/main/res/values/strings.xml
+        new file:   app/src/main/res/values/styles.xml
+        new file:   app/src/test/java/com/silentdevelopers/facultyrater/ExampleU
+nitTest.java
+        new file:   build.gradle
+        new file:   gradle.properties
+        new file:   gradle/wrapper/gradle-wrapper.jar
+        new file:   gradle/wrapper/gradle-wrapper.properties
+        new file:   gradlew
+        new file:   gradlew.bat
+        new file:   settings.gradle
+
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git commit -m "Initialize"
+
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'jaina_000@JainamJhaveri.(none)'
+)
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git config --global user.e
+mail "engineerjainam@gmail.com"
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git config --global user.n
+ame "Jainam Jhaveri.. "
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git add .
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   .gitignore
+        new file:   .idea/.name
+        new file:   .idea/compiler.xml
+        new file:   .idea/copyright/profiles_settings.xml
+        new file:   .idea/encodings.xml
+        new file:   .idea/gradle.xml
+        new file:   .idea/misc.xml
+        new file:   .idea/modules.xml
+        new file:   .idea/runConfigurations.xml
+        new file:   .idea/vcs.xml
+        new file:   app/.gitignore
+        new file:   app/build.gradle
+        new file:   app/proguard-rules.pro
+        new file:   app/src/androidTest/java/com/silentdevelopers/facultyrater/A
+pplicationTest.java
+        new file:   app/src/main/AndroidManifest.xml
+        new file:   app/src/main/java/com/silentdevelopers/facultyrater/HomeActi
+vity.java
+        new file:   app/src/main/java/com/silentdevelopers/facultyrater/StartAct
+ivity.java
+        new file:   app/src/main/res/layout/activity_home.xml
+        new file:   app/src/main/res/layout/activity_start.xml
+        new file:   app/src/main/res/mipmap-hdpi/ic_launcher.png
+        new file:   app/src/main/res/mipmap-mdpi/ic_launcher.png
+        new file:   app/src/main/res/mipmap-xhdpi/ic_launcher.png
+        new file:   app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+        new file:   app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+        new file:   app/src/main/res/values-w820dp/dimens.xml
+        new file:   app/src/main/res/values/colors.xml
+        new file:   app/src/main/res/values/dimens.xml
+        new file:   app/src/main/res/values/strings.xml
+        new file:   app/src/main/res/values/styles.xml
+        new file:   app/src/test/java/com/silentdevelopers/facultyrater/ExampleU
+nitTest.java
+        new file:   build.gradle
+        new file:   gradle.properties
+        new file:   gradle/wrapper/gradle-wrapper.jar
+        new file:   gradle/wrapper/gradle-wrapper.properties
+        new file:   gradlew
+        new file:   gradlew.bat
+        new file:   settings.gradle
+
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git commit -m "commit 1"
+[master aff42dc] commit 1
+warning: LF will be replaced by CRLF in .idea/compiler.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/encodings.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/gradle.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/misc.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/modules.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/runConfigurations.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in .idea/vcs.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in gradle/wrapper/gradle-wrapper.properties
+.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in gradlew.
+The file will have its original line endings in your working directory.
+ 37 files changed, 604 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 .idea/.name
+ create mode 100644 .idea/compiler.xml
+ create mode 100644 .idea/copyright/profiles_settings.xml
+ create mode 100644 .idea/encodings.xml
+ create mode 100644 .idea/gradle.xml
+ create mode 100644 .idea/misc.xml
+ create mode 100644 .idea/modules.xml
+ create mode 100644 .idea/runConfigurations.xml
+ create mode 100644 .idea/vcs.xml
+ create mode 100644 app/.gitignore
+ create mode 100644 app/build.gradle
+ create mode 100644 app/proguard-rules.pro
+ create mode 100644 app/src/androidTest/java/com/silentdevelopers/facultyrater/A
+pplicationTest.java
+ create mode 100644 app/src/main/AndroidManifest.xml
+ create mode 100644 app/src/main/java/com/silentdevelopers/facultyrater/HomeActi
+vity.java
+ create mode 100644 app/src/main/java/com/silentdevelopers/facultyrater/StartAct
+ivity.java
+ create mode 100644 app/src/main/res/layout/activity_home.xml
+ create mode 100644 app/src/main/res/layout/activity_start.xml
+ create mode 100644 app/src/main/res/mipmap-hdpi/ic_launcher.png
+ create mode 100644 app/src/main/res/mipmap-mdpi/ic_launcher.png
+ create mode 100644 app/src/main/res/mipmap-xhdpi/ic_launcher.png
+ create mode 100644 app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+ create mode 100644 app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+ create mode 100644 app/src/main/res/values-w820dp/dimens.xml
+ create mode 100644 app/src/main/res/values/colors.xml
+ create mode 100644 app/src/main/res/values/dimens.xml
+ create mode 100644 app/src/main/res/values/strings.xml
+ create mode 100644 app/src/main/res/values/styles.xml
+ create mode 100644 app/src/test/java/com/silentdevelopers/facultyrater/ExampleU
+nitTest.java
+ create mode 100644 build.gradle
+ create mode 100644 gradle.properties
+ create mode 100644 gradle/wrapper/gradle-wrapper.jar
+ create mode 100644 gradle/wrapper/gradle-wrapper.properties
+ create mode 100644 gradlew
+ create mode 100644 gradlew.bat
+ create mode 100644 settings.gradle
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>git push master master
+Username for 'https://github.com': engineerjainam@gmail.com
+Password for 'https://engineerjainam@gmail.com@github.com':
+Counting objects: 69, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (45/45), done.
+Writing objects: 100% (69/69), 86.52 KiB | 0 bytes/s, done.
+Total 69 (delta 1), reused 0 (delta 0)
+To https://github.com/JainamJhaveri/FacultyRater.git
+   0fcbdac..aff42dc  master -> master
+
+C:\Users\jaina_000\AndroidStudioProjects\FacultyRater>
