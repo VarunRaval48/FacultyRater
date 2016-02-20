@@ -4,10 +4,11 @@ import android.accounts.AccountManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.auth.api.Auth;
 import com.silentdevelopers.facultyrater.R;
+import com.silentdevelopers.facultyrater.StartActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,18 +49,37 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         View.OnClickListener {
 
     private GoogleApiClient mGoogleApiClient;
+
     private int RC_SIGN_IN = 50, REQUEST_CODE_PICK_ACCOUNT = 999,
             REQUEST_AUTHORIZATION = 998, REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 997;
-    String email, scope, oAuthscopes, nuconnect_accessToken, email_initials, name, login_type;
-    boolean inflate_retry;
-    static boolean handling = false;
+
+    String email, scope, oAuthscopes, faculyrater_accesstoken, email_initials, name, login_type;
+    static boolean handling = false, inflate_retry;
+
+    private SignInButton signInButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        scope = "audience:server:client_id:611036220045-sjstaa7r37ufc1t4q0iotb1otng8ktj2.apps.googleusercontent.com";
+        oAuthscopes = "oauth2:" + "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.login";
+
 //        usingGso();
-        pickUserAccount();
+        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+
+        signInButton.setOnClickListener(this);
+    }
+
+    public boolean isDeviceOnline() {
+        ConnectivityManager comMng = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo netInfo = comMng.getActiveNetworkInfo();
+
+        if (netInfo != null && netInfo.isConnected())
+            return true;
+        return false;
     }
 
 
@@ -78,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     protected void inflateRetry() {
-        Toast.makeText(this, "Connection Failure", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Connection Failure try Again", Toast.LENGTH_SHORT).show();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -87,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (resultCode == RESULT_OK) {
                 email = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                 Log.i("MainSlider", email);
-                if (!email.endsWith("nirmauni.ac.in") && false) {
+                if (!email.endsWith("nirmauni.ac.in")) {
                     Log.i("Toast", "Wrong Account");
                     Toast.makeText(this, "You must chose nirmauni account", Toast.LENGTH_SHORT).show();
 //                    inflateRetry();
@@ -101,20 +122,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "You must chose an account to Login", Toast.LENGTH_SHORT).show();
-//                inflateRetry();
+                inflateRetry();
                 inflate_retry = true;
             }
         } else if (requestCode == REQUEST_AUTHORIZATION) {
             if (resultCode == RESULT_OK) {
                 new GetUsername(this, email, scope, oAuthscopes).execute();
             } else {
-//                inflateRetry();
-//                inflate_retry = true;
+                inflateRetry();
+                inflate_retry = true;
             }
         } else if (requestCode == REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) {
             //called when returning from GooglePlayServices Exception
-//            inflateRetry();
-//            inflate_retry = true;
+            inflateRetry();
+            inflate_retry = true;
         } else if (requestCode == RC_SIGN_IN){
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
@@ -122,31 +143,51 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     public void setAccessToken(String accessToken){
-        nuconnect_accessToken = accessToken;
+        faculyrater_accesstoken = accessToken;
     }
 
+    public void setUsername(Bundle arg){
 
-    public boolean isDeviceOnline() {
-        ConnectivityManager comMng = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        final NetworkInfo netInfo = comMng.getActiveNetworkInfo();
 
-        if (netInfo != null && netInfo.isConnected())
-            return true;
-        return false;
+        Log.i("Checking", "Calling sendtoserver class");
+        Log.i("name", arg.getString("name"));
+        Log.i("email", arg.getString("email"));
+
+//            new SendTokenToServerClass(arg.getString("email"), arg).execute();
+        //TODO send access token to server
+
+        validateAndGo(arg);
     }
 
-    public class GetUsername extends AsyncTask<Object, Void, Bundle> {
+    private void validateAndGo(Bundle arg){
+
+        String name = arg.getString("name");
+        String email = arg.getString("email").split("@")[0];
+        arg.putString("email", email);
+
+        SharedPreferences.Editor editor= PreferenceManager.getDefaultSharedPreferences(this).edit();
+
+        editor.putString("FacultyRater_name", name);
+        editor.putString("FacultyRater_email", email);
+        editor.putString("FacultyRater_access_token", faculyrater_accesstoken);
+
+        editor.commit();
+
+        Intent intent = new Intent(this, StartActivity.class);
+        intent.putExtra("user_info", arg);
+        intent.putExtra("intent_type", "new_login");
+
+        startActivity(intent);
+    }
+
+        public class GetUsername extends AsyncTask<Object, Void, Bundle> {
 
         LoginActivity act;
-        String email;
-        String scope;
-        String oAuthscopes;
+        String email, scope, oAuthscopes, accessToken;
         List<NameValuePair> nameValuePairs;
         URL serverCheckuser;
         boolean waiting = false;
 
-        String idToken = null;
-        String accessToken = null;
 //    ProgressDialog progressDialog;
 
         GetUsername(LoginActivity act, String email, String scope, String oAuthScopes) {
@@ -169,14 +210,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             Bundle values = null;
 
             try {
-//                idToken = fetchIDToken();
                 accessToken = fetchAccessToken();
 
                 Log.i("Before", "Before waiting " + handling);
 
                 if (accessToken != null) {
 
-//                    Log.i("ID Token", idToken);
+                    Log.i("LoginActivity", "After fetching access token");
                     Log.i("Access Token", accessToken);
 
                     setAccessToken(accessToken);
@@ -184,15 +224,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     URL url = new URL("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken);
                     StringBuffer val = returnJson(url);
 
-//                    url = new URL("https://www.googleapis.com/oauth2/v1/tokeninfo?alt=json&id_token=" + idToken);
-//                    StringBuffer valVerify = returnJson(url);
-
                     Log.i("Value :", val.toString());
-//                    Log.i("Value Verified :", valVerify.toString());
 
                     JSONObject reader;
                     reader = new JSONObject(val.toString());
-                    //            reader = jArray.getJSONObject(0);
 
                     values = new Bundle();
 
@@ -200,13 +235,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     values.putString("email", (String) reader.get("email"));
                     values.putString("name", name);
 
-//                    reader = new JSONObject(valVerify.toString());
-                    //            reader = jArray.getJSONObject(1);
                     values.putBoolean("verified", reader.getBoolean("verified_email"));
 
                 } else {
-//                    Toast.makeText(act.getApplicationContext(), "Login Error", Toast.LENGTH_SHORT).show();
 //                    inflateRetry();
+                    values = null;
                 }
             } catch (IOException e) {
 //                doOnUIInflate("retry", e);
@@ -230,32 +263,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 //            validateAndGo(result);
             if (result != null)
                 setUsername(result);
-        }
-
-        public void setUsername(Bundle arg){
-
-            Log.i("Checking", "Calling sendtoserver class");
-            Log.i("name", arg.getString("name"));
-            Log.i("email", arg.getString("email"));
-//            new SendTokenToServerClass(arg.getString("email"), arg).execute();
-            //TODO send access token to server
-        }
-
-        protected String fetchIDToken() throws IOException {
-            try {
-                return GoogleAuthUtil.getToken(act, email, scope);
-            } catch (GooglePlayServicesAvailabilityException e) {
-                handling = true;
-                Log.i("Before", "Before calling handle Exception gPlay " + handling);
-                handleException(e);
-            } catch (UserRecoverableAuthException e) {
-                handling = true;
-                Log.i("Before", "Before calling handle Exception recoverable");
-                handleException(e);
-            } catch (GoogleAuthException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
 
         protected String fetchAccessToken() throws IOException {
@@ -332,6 +339,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 //        notify();
     }
 
+
     private void usingGso(){
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -342,8 +350,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_WIDE);
         signInButton.setScopes(gso.getScopeArray());
 
         signInButton.setOnClickListener(this);
