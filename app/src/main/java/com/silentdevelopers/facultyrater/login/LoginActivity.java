@@ -30,6 +30,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.auth.api.Auth;
 import com.silentdevelopers.facultyrater.R;
 import com.silentdevelopers.facultyrater.StartActivity;
+import com.silentdevelopers.facultyrater.main_body.MainBodyActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -173,7 +174,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         editor.commit();
 
-        Intent intent = new Intent(this, StartActivity.class);
+        Intent intent = new Intent(this, MainBodyActivity.class);
         intent.putExtra("user_info", arg);
         intent.putExtra("intent_type", "new_login");
 

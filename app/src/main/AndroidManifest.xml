@@ -19,17 +19,18 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".StartActivity"
-            android:label="@string/app_name">
-        </activity>
-
-        <activity android:name=".login.LoginActivity"></activity>
-
+            android:label="@string/app_name"></activity>
+        <activity android:name=".login.LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".main_body.MainBodyActivity"
+            android:label="@string/title_activity_main_body"></activity>
     </application>
 
 </manifest>

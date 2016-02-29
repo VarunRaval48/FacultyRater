@@ -19,6 +19,7 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.silentdevelopers.facultyrater.login.LoginActivity;
+import com.silentdevelopers.facultyrater.main_body.MainBodyActivity;
 
 import java.io.IOException;
 
@@ -124,7 +125,7 @@ public class MainActivity extends Activity {
         arg.putString("email", email);
 //        arg.putString("login_type", login_type);
 
-        Intent in = new Intent(MainActivity.this, StartActivity.class);
+        Intent in = new Intent(MainActivity.this, MainBodyActivity.class);
         in.putExtra("intent_type", "resuming");
         in.putExtra("user_info", arg);
         startActivity(in);
