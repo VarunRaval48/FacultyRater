@@ -4,9 +4,9 @@ android:orientation="horizontal" android:layout_width="match_parent"
 android:layout_height="wrap_content"
     android:background="#eee">
 
-    <ImageView
-        android:src="@drawable/gr_photo_18072014_103842pm"
+    <com.silentdevelopers.facultyrater.main_body.RoundedImageView
         android:id="@+id/img_single_item"
+        android:scaleType="fitXY"
         android:layout_width="80dp"
         android:layout_gravity="center"
         android:layout_height="match_parent"

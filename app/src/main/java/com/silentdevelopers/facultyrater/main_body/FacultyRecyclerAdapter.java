@@ -1,5 +1,6 @@
 package com.silentdevelopers.facultyrater.main_body;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ public class FacultyRecyclerAdapter extends RecyclerView.Adapter<FacultyRecycler
 
     ArrayList<DataProviderFaculty> arrayList;
 
+    Context context;
     public FacultyRecyclerAdapter(ArrayList<DataProviderFaculty> arrayList){
         this.arrayList = arrayList;
     }
@@ -27,6 +29,7 @@ public class FacultyRecyclerAdapter extends RecyclerView.Adapter<FacultyRecycler
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+        context = parent.getContext();
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_faculty_item,parent,false);
         RecyclerViewHolder recyclerViewHolderM=new RecyclerViewHolder(view);
 
@@ -41,8 +44,8 @@ public class FacultyRecyclerAdapter extends RecyclerView.Adapter<FacultyRecycler
         holder.textVeiw_des.setText(dataProvider.getDesignation());
         holder.textVeiw_exp.setText(dataProvider.getExperience());
         holder.textVeiw_time.setText(dataProvider.getTime());
-//        holder.imageView.setImageBitmap(RoundedImageView.decodeSampledBitmapFromResource
-//                (MainBodyActivity.getActivity().getResources(), dataProvider.getImg_res(), 300, 300));
+        holder.imageView.setImageBitmap(RoundedImageView.decodeSampledBitmapFromResource
+                (context.getResources(), dataProvider.getImg_res(), 300, 300));
     }
 
     @Override
