@@ -2,8 +2,11 @@ package com.silentdevelopers.facultyrater;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -62,15 +65,35 @@ public class MainActivity extends Activity {
 
         Bundle arg = new Bundle();
 
-        //TODO check access token with server
+        //TODO check access token with server and make system to refresh access token as network arrive
         if (isSignedIn) {
 
-            new FetchToken().execute();
+            if(isDeviceOnline())
+                new FetchToken().execute();
+            else{
+
+                Intent in = new Intent(this, MainBodyActivity.class);
+                in.putExtra("intent_type", "resuming");
+                in.putExtra("user_info", arg);
+                startActivity(in);
+                finish();
+            }
+
         } else {
 
             Intent in = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(in);
+            finish();
         }
+    }
+
+    public boolean isDeviceOnline() {
+        ConnectivityManager comMng = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo netInfo = comMng.getActiveNetworkInfo();
+
+        if (netInfo != null && netInfo.isConnected())
+            return true;
+        return false;
     }
 
     public void onResume(){

@@ -2,6 +2,7 @@ package com.silentdevelopers.facultyrater.login;
 
 import android.accounts.AccountManager;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -143,6 +144,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
+    protected void tryNewToken(){
+        new GetUsername(this, email, scope, oAuthscopes).execute();
+
+    }
+
     public void setAccessToken(String accessToken){
         faculyrater_accesstoken = accessToken;
     }
@@ -179,6 +185,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         intent.putExtra("intent_type", "new_login");
 
         startActivity(intent);
+        finish();
     }
 
         public class GetUsername extends AsyncTask<Object, Void, Bundle> {
@@ -189,7 +196,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         URL serverCheckuser;
         boolean waiting = false;
 
-//    ProgressDialog progressDialog;
+        ProgressDialog progressDialog;
 
         GetUsername(LoginActivity act, String email, String scope, String oAuthScopes) {
             this.act = act;
@@ -201,14 +208,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
 
 
-//        protected void onPreExecute() {
+        protected void onPreExecute() {
 //            showSpinner();
-//        }
+
+            progressDialog = new ProgressDialog(LoginActivity.this, ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+        }
 
         @Override
         protected Bundle doInBackground(Object... params) {
 
-            Bundle values = null;
+            Bundle values = new Bundle();
 
             try {
                 accessToken = fetchAccessToken();
@@ -230,7 +240,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     JSONObject reader;
                     reader = new JSONObject(val.toString());
 
-                    values = new Bundle();
 
                     name = (String) reader.get("name");
                     values.putString("email", (String) reader.get("email"));
@@ -244,9 +253,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             } catch (IOException e) {
 //                doOnUIInflate("retry", e);
+                GoogleAuthUtil.invalidateToken(getApplicationContext(), accessToken);
+                values.putString("exc", "FileIO");
                 e.printStackTrace();
             } catch (JSONException e) {
 //                doOnUIInflate("retry", e);
+                values.putString("exc", "JSON");
                 e.printStackTrace();
             }
             return values;
@@ -257,13 +269,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         protected void onPostExecute(Bundle result) {
 
-//        if(progressDialog.isShowing()){
-//            progressDialog.dismiss();
-//        }
+        if(progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
 //            inflateRetry();
 //            validateAndGo(result);
-            if (result != null)
-                setUsername(result);
+            if (result != null) {
+                String temp = result.getString("exc");
+
+                if(temp==null){
+                    setUsername(result);
+                }
+                else if(result.getString("exc").equals("FileIO")){
+//                    Toast.makeText(getApplicationContext(), "Unable to get account", Toast.LENGTH_SHORT).show();
+                        tryNewToken();
+                }
+                else if(result.getString("exc").equals("JSON")){
+
+                }
+            }
         }
 
         protected String fetchAccessToken() throws IOException {
