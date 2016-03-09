@@ -1,6 +1,8 @@
 package com.silentdevelopers.facultyrater.main_body;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silentdevelopers.facultyrater.R;
+import com.silentdevelopers.facultyrater.StartActivity;
+
 import android.content.res.Resources;
+import android.widget.Toast;
+
+import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 
@@ -22,8 +29,11 @@ public class FacultyRecyclerAdapter extends RecyclerView.Adapter<FacultyRecycler
     ArrayList<DataProviderFaculty> arrayList;
 
     Context context;
-    public FacultyRecyclerAdapter(ArrayList<DataProviderFaculty> arrayList){
+    MainBodyActivity parentAct;
+
+    public FacultyRecyclerAdapter(ArrayList<DataProviderFaculty> arrayList, MainBodyActivity parentAct){
         this.arrayList = arrayList;
+        this.parentAct = parentAct;
     }
 
     @Override
@@ -32,6 +42,19 @@ public class FacultyRecyclerAdapter extends RecyclerView.Adapter<FacultyRecycler
         context = parent.getContext();
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_faculty_item,parent,false);
         RecyclerViewHolder recyclerViewHolderM=new RecyclerViewHolder(view);
+
+        final RecyclerView recyclerView = (RecyclerView)parent.findViewById(R.id.recycler_view_faculty_list);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int itemPosition = recyclerView.getChildLayoutPosition(v);
+                DataProviderFaculty dataProviderFaculty = arrayList.get(itemPosition);
+                Toast.makeText(context, dataProviderFaculty.getName(), Toast.LENGTH_SHORT).show();
+
+                parentAct.handleRecycleClick(dataProviderFaculty.getId());
+            }
+        });
 
         return recyclerViewHolderM;
     }
@@ -47,6 +70,8 @@ public class FacultyRecyclerAdapter extends RecyclerView.Adapter<FacultyRecycler
         holder.imageView.setImageBitmap(RoundedImageView.decodeSampledBitmapFromResource
                 (context.getResources(), dataProvider.getImg_res(), 300, 300));
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -69,4 +94,5 @@ public class FacultyRecyclerAdapter extends RecyclerView.Adapter<FacultyRecycler
 
         }
     }
+
 }

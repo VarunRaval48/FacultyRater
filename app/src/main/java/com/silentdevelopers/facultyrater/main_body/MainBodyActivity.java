@@ -29,9 +29,10 @@ import android.widget.TextView;
 
 import com.silentdevelopers.facultyrater.MainActivity;
 import com.silentdevelopers.facultyrater.R;
+import com.silentdevelopers.facultyrater.StartActivity;
 
 public class MainBodyActivity extends AppCompatActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, FacultyRecyclerViewFragment.OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, FacultyRecyclerViewFragment.OnFragmentRVInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -59,6 +60,8 @@ public class MainBodyActivity extends AppCompatActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout), getSupportActionBar());
 
         FacultyRecyclerViewFragment facultyRecyclerViewFragment = new FacultyRecyclerViewFragment();
+        facultyRecyclerViewFragment.setParent(this);
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, facultyRecyclerViewFragment)
                 .commit();
@@ -159,8 +162,18 @@ public class MainBodyActivity extends AppCompatActivity
                 .show();
     }
 
+    public void handleRecycleClick(int id){
+
+        Intent intent = new Intent(this, StartActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", id);
+        intent.putExtra("info", bundle);
+        startActivity(intent);
+    }
+
+
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteractionRV(View v) {
 
     }
 

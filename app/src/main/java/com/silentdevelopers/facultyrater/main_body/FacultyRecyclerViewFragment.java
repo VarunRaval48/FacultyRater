@@ -1,16 +1,19 @@
 package com.silentdevelopers.facultyrater.main_body;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.silentdevelopers.facultyrater.R;
+import com.silentdevelopers.facultyrater.StartActivity;
 
 import java.util.ArrayList;
 
@@ -22,9 +25,10 @@ public class FacultyRecyclerViewFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentRVInteractionListener mListener;
 
     public FacultyRecyclerViewFragment() {
+
     }
 
     public static FacultyRecyclerViewFragment newInstance(String param1, String param2) {
@@ -49,6 +53,13 @@ public class FacultyRecyclerViewFragment extends Fragment {
         }
     }
 
+
+    static MainBodyActivity parentAct;
+    public void setParent(MainBodyActivity parent){
+        parentAct = parent;
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,16 +71,17 @@ public class FacultyRecyclerViewFragment extends Fragment {
 
         String name[] = {"A", "B"}, des[]= {"da", "db"}, time[] = {"1", "2"}, exp[] = {"e1", "e2"};
         int img_res[] = {R.drawable.gr_photo_18072014_103842pm, R.drawable.gr_photo_18072014_103842pm};
+        int id[] = {1, 2};
 
         int i=0;
         for(String n: name){
-            DataProviderFaculty dataProviderFaculty = new DataProviderFaculty(img_res[i], n, des[i], exp[i], time[i]);
+            DataProviderFaculty dataProviderFaculty = new DataProviderFaculty(img_res[i], n, des[i], exp[i], time[i], id[i]);
             arrayList.add(dataProviderFaculty);
             i++;
         }
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_faculty_list);
-        adapter = new FacultyRecyclerAdapter(arrayList);
+        adapter = new FacultyRecyclerAdapter(arrayList, parentAct);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -78,18 +90,20 @@ public class FacultyRecyclerViewFragment extends Fragment {
         return view;
     }
 
+
+
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(View v) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteractionRV(v);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnFragmentRVInteractionListener) {
+            mListener = (OnFragmentRVInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -102,8 +116,8 @@ public class FacultyRecyclerViewFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentRVInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteractionRV(View v);
     }
 }
